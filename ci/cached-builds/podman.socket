@@ -1,0 +1,13 @@
+# https://github.com/containers/podman/blob/main/contrib/systemd/system/podman.socket
+# cat /usr/lib/systemd/system/podman.socket
+
+[Unit]
+Description=Podman API Socket
+Documentation=man:podman-system-service(1)
+
+[Socket]
+ListenStream=%t/podman/podman.sock
+SocketMode=0666
+
+[Install]
+WantedBy=sockets.target
