@@ -58,3 +58,5 @@ RUN echo "[ROCm]" > /etc/yum.repos.d/rocm.repo && \
 # Restore notebook user workspace
 USER 1001
 WORKDIR /opt/app-root/src
+
+RUN mkdir -m 775 /opt/app-root/share
