@@ -24,3 +24,5 @@ RUN curl -L https://mirror.openshift.com/pub/openshift-v4/$(uname -m)/clients/oc
     tar -xzvf /tmp/openshift-client-linux.tar.gz oc && \
     rm -f /tmp/openshift-client-linux.tar.gz
 # Install the oc client end
+
+RUN mkdir -m 775 /opt/app-root/share
