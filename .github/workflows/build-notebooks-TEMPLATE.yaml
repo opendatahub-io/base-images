@@ -255,6 +255,8 @@ jobs:
       - name: Calculate image name and tag
         id: calculated_vars
         run: |
+          set -Eeuxo pipefail
+
           # Need for sanitization explained in https://github.com/opendatahub-io/notebooks/issues/631
           # For length, Docker image tags have 128-character limit, and we form them as <inputs.target>-<ref_name>_<sha>
           # therefore since sha is 40 characters, and our target names are <40 chars, we should cut ref_name at 40
@@ -291,6 +293,7 @@ jobs:
           # print running stats on disk occupancy
           (while true; do df -h | grep "${HOME}/.local/share/containers"; sleep 30; done) &
 
+          set -Eeuxo pipefail
           make ${{ inputs.target }}
         if: ${{ fromJson(inputs.github).event_name == 'push' ||
           fromJson(inputs.github).event_name == 'schedule' ||
@@ -303,6 +306,7 @@ jobs:
           # print running stats on disk occupancy
           (while true; do df -h | grep "${HOME}/.local/share/containers"; sleep 30; done) &
 
+          set -Eeuxo pipefail
           make ${{ inputs.target }}
         if: "${{ fromJson(inputs.github).event_name == 'pull_request' ||
           fromJson(inputs.github).event_name == 'pull_request_target' }}"
