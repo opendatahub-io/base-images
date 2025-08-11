@@ -115,11 +115,11 @@ bin/buildinputs: scripts/buildinputs/buildinputs.go scripts/buildinputs/go.mod s
 ####################################### Buildchain for Python using ubi9 #####################################
 
 .PHONY: cpu-ubi9-python-$(RELEASE_PYTHON_VERSION)
-base-ubi9-python-$(RELEASE_PYTHON_VERSION):
+cpu-ubi9-python-$(RELEASE_PYTHON_VERSION):
 	$(call image,$@,base/ubi9-python-$(RELEASE_PYTHON_VERSION)/Dockerfile.cpu)
 
 .PHONY: cuda-ubi9-python-$(RELEASE_PYTHON_VERSION)
-cuda-jupyter-minimal-ubi9-python-$(RELEASE_PYTHON_VERSION):
+cuda-ubi9-python-$(RELEASE_PYTHON_VERSION):
 	$(call image,$@,base/ubi9-python-$(RELEASE_PYTHON_VERSION)/Dockerfile.cuda)
 
 .PHONY: rocm-ubi9-python-$(RELEASE_PYTHON_VERSION)
