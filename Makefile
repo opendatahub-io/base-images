@@ -153,7 +153,7 @@ endif
 deploy9-%: bin/kubectl bin/yq
 	$(eval TARGET := $(shell echo $* | sed 's/-ubi9-python.*//'))
 	$(eval PYTHON_VERSION := $(shell echo $* | sed 's/.*-python-//'))
-	$(eval NOTEBOOK_DIR := $(subst -,/,$(subst cuda-,,$(TARGET)))/ubi9-python-$(PYTHON_VERSION)/kustomize/base)
+	$(eval NOTEBOOK_DIR := base/ubi9-python-$(PYTHON_VERSION)/kustomize/base)
 ifndef NOTEBOOK_TAG
 	$(eval NOTEBOOK_TAG := $*-$(IMAGE_TAG))
 endif
@@ -166,7 +166,7 @@ endif
 undeploy9-%: bin/kubectl
 	$(eval TARGET := $(shell echo $* | sed 's/-ubi9-python.*//'))
 	$(eval PYTHON_VERSION := $(shell echo $* | sed 's/.*-python-//'))
-	$(eval NOTEBOOK_DIR := $(subst -,/,$(subst cuda-,,$(TARGET)))/ubi9-python-$(PYTHON_VERSION)/kustomize/base)
+	$(eval NOTEBOOK_DIR := base/ubi9-python-$(PYTHON_VERSION)/kustomize/base)
 	$(info # Undeploying notebook from $(NOTEBOOK_DIR) directory...)
 	$(KUBECTL_BIN) delete -k $(NOTEBOOK_DIR)
 
