@@ -153,13 +153,58 @@ def gha_log_group(title):
 @unittest.mock.patch("time.sleep", unittest.mock.Mock())
 class TestMakeTest(unittest.TestCase):
     @unittest.mock.patch("make_test.execute")
-    def test_make_commands_runtime(self, mock_execute: unittest.mock.Mock) -> None:
+    def test_make_commands_cpu_311(self, mock_execute: unittest.mock.Mock) -> None:
         """Compares the commands with what we had in the openshift/release yaml"""
-        run_tests("runtime-datascience-ubi9-python-3.11")
+        run_tests("cpu-ubi9-python-3.11")
         commands: list[str] = [c[0][1][0] for c in mock_execute.call_args_list]
-        assert "make deploy9-runtimes-datascience-ubi9-python-3.11" in commands
-        assert "make validate-runtime-image image=runtime-datascience-ubi9-python-3.11" in commands
-        assert "make undeploy9-runtimes-datascience-ubi9-python-3.11" in commands
+        assert "make deploy9-cpu-ubi9-python-3.11" in commands
+        assert "make validate-base-image image=cpu-ubi9-python-3.11" in commands
+        assert "make undeploy9-cpu-ubi9-python-3.11" in commands
+
+    @unittest.mock.patch("make_test.execute")
+    def test_make_commands_cuda_311(self, mock_execute: unittest.mock.Mock) -> None:
+        """Compares the commands with what we had in the openshift/release yaml"""
+        run_tests("cuda-ubi9-python-3.11")
+        commands: list[str] = [c[0][1][0] for c in mock_execute.call_args_list]
+        assert "make deploy9-cuda-ubi9-python-3.11" in commands
+        assert "make validate-base-image image=cuda-ubi9-python-3.11" in commands
+        assert "make undeploy9-cuda-ubi9-python-3.11" in commands
+
+    @unittest.mock.patch("make_test.execute")
+    def test_make_commands_rocm_311(self, mock_execute: unittest.mock.Mock) -> None:
+        """Compares the commands with what we had in the openshift/release yaml"""
+        run_tests("rocm-ubi9-python-python-3.11")
+        commands: list[str] = [c[0][1][0] for c in mock_execute.call_args_list]
+        assert "make deploy9-rocm-ubi9-python-python-3.11" in commands
+        assert "make validate-base-image image=rocm-ubi9-python-python-3.11" in commands
+        assert "make undeploy9-rocm-ubi9-python-python-3.11" in commands
+
+    @unittest.mock.patch("make_test.execute")
+    def test_make_commands_cpu_312(self, mock_execute: unittest.mock.Mock) -> None:
+        """Compares the commands with what we had in the openshift/release yaml"""
+        run_tests("cpu-ubi9-python-3.12")
+        commands: list[str] = [c[0][1][0] for c in mock_execute.call_args_list]
+        assert "make deploy9-cpu-ubi9-python-3.12" in commands
+        assert "make validate-base-image image=cpu-ubi9-python-3.12" in commands
+        assert "make undeploy9-cpu-ubi9-python-3.12" in commands
+
+    @unittest.mock.patch("make_test.execute")
+    def test_make_commands_cuda_312(self, mock_execute: unittest.mock.Mock) -> None:
+        """Compares the commands with what we had in the openshift/release yaml"""
+        run_tests("cuda-ubi9-python-3.12")
+        commands: list[str] = [c[0][1][0] for c in mock_execute.call_args_list]
+        assert "make deploy9-cuda-ubi9-python-3.12" in commands
+        assert "make validate-base-image image=cuda-ubi9-python-3.12" in commands
+        assert "make undeploy9-cuda-ubi9-python-3.12" in commands
+
+    @unittest.mock.patch("make_test.execute")
+    def test_make_commands_rocm_312(self, mock_execute: unittest.mock.Mock) -> None:
+        """Compares the commands with what we had in the openshift/release yaml"""
+        run_tests("rocm-ubi9-python-python-3.12")
+        commands: list[str] = [c[0][1][0] for c in mock_execute.call_args_list]
+        assert "make deploy9-rocm-ubi9-python-python-3.12" in commands
+        assert "make validate-base-image image=rocm-ubi9-python-python-3.12" in commands
+        assert "make undeploy9-rocm-ubi9-python-python-3.12" in commands
 
 
 if __name__ == "__main__":
