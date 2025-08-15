@@ -181,24 +181,24 @@ test-%: bin/kubectl
 .PHONY: validate-base-image
 validate-base-image: bin/kubectl
 	$(eval NOTEBOOK_NAME := $(subst .,-,$(subst cuda-,,$*)))
-	$(info # Running tests for $(NOTEBOOK_NAME) runtime...)
-	$(KUBECTL_BIN) wait --for=condition=ready pod runtime-pod --timeout=300s
+	$(info # Running tests for $(NOTEBOOK_NAME) base...)
+	$(KUBECTL_BIN) wait --for=condition=ready pod base-pod --timeout=300s
 	@required_commands=$(REQUIRED_BASE_IMAGE_COMMANDS)
 	fail=0
 	if [[ $$image == "" ]] ; then
-		echo "Usage: make validate-runtime-image image=<container-image-name>"
+		echo "Usage: make validate-base-image image=<container-image-name>"
 		exit 1
 	fi
 	for cmd in $$required_commands ; do
 		echo "=> Checking container image $$image for $$cmd..."
-		if ! $(KUBECTL_BIN) exec runtime-pod which $$cmd > /dev/null 2>&1 ; then
+		if ! $(KUBECTL_BIN) exec base-pod which $$cmd > /dev/null 2>&1 ; then
 			echo "ERROR: Container image $$image  does not meet criteria for command: $$cmd"
 			fail=1
 			continue
 		fi
 		if [ $$cmd == "python3" ]; then
 			echo "=> Checking notebook execution..."
-			if ! $(KUBECTL_BIN) exec runtime-pod -- /bin/sh -c "curl https://raw.githubusercontent.com/opendatahub-io/elyra/refs/heads/main/etc/generic/requirements-elyra.txt --output req.txt && \
+			if ! $(KUBECTL_BIN) exec base-pod -- /bin/sh -c "curl https://raw.githubusercontent.com/opendatahub-io/elyra/refs/heads/main/etc/generic/requirements-elyra.txt --output req.txt && \
 					python3 -m pip install -r req.txt > /dev/null && \
 					curl https://raw.githubusercontent.com/nteract/papermill/main/papermill/tests/notebooks/simple_execute.ipynb --output simple_execute.ipynb && \
 					python3 -m papermill simple_execute.ipynb output.ipynb > /dev/null" ; then
