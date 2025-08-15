@@ -15,7 +15,7 @@ import pytest
 import testcontainers.core.container
 import testcontainers.core.waiting_utils
 
-from tests.containers import docker_utils, utils
+from tests.containers import docker_utils, kubernetes_utils, utils
 
 logging.basicConfig(level=logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
@@ -240,6 +240,20 @@ class TestBaseImage:
                     assert cleaned_output == f"{item[1]}:{item[2]}:{item[3]}"
 
         self._run_test(image=image, test_fn=test_fn)
+
+    @pytest.mark.openshift
+    def test_image_run_on_openshift(self, workbench_image: str):
+        client = kubernetes_utils.get_client()
+        print(client)
+
+        username = kubernetes_utils.get_username(client)
+        print(username)
+
+        with kubernetes_utils.ImageDeployment(client, workbench_image) as image:
+            image.deploy(
+                container_name="notebook-tests-pod",
+                is_runtime_image=True,  # it is not a workbench with an entrypoint
+            )
 
 
 def encode_python_function_execution_command_interpreter(
