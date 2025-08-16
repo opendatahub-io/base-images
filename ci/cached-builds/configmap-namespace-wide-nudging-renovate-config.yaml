@@ -1,0 +1,16 @@
+﻿---
+# https://konflux-ci.dev/docs/building/component-nudges/#customizing-nudging-prs
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: namespace-wide-nudging-renovate-config
+  namespace: rhoai-ide-konflux-tenant
+data:
+  automerge: "true"
+  # https://docs.renovatebot.com/key-concepts/automerge/#branch-vs-pr-automerging
+  automergeType: "branch"
+  commitMessagePrefix: "chore(deps):"
+  commitMessageSuffix: ""
+  # fileMatch: ".*Dockerfile.*, .*.yaml, .*Containerfile.*"
+  ignoreTests: "true"
+  platformAutomerge: "true"

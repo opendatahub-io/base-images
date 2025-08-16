@@ -1,0 +1,13 @@
+---
+
+extends: default
+
+rules:
+  line-length: disable
+  new-line-at-end-of-file:
+    level: warning
+
+  document-start:
+    ignore:
+      # generated file
+      - 'pnpm-lock.yaml'
