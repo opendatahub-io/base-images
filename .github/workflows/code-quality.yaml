@@ -87,6 +87,9 @@ jobs:
         run: |
           set -Eeuxo pipefail
 
+          # skip the for loops if the glob doesn't match anything
+          shopt -s nullglob
+
           type json_verify || sudo apt-get -y install yajl-tools
           shopt -s globstar
           ret_code=0
