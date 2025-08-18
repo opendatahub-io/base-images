@@ -1,4 +1,4 @@
-﻿---
+---
 # https://konflux-ci.dev/docs/building/component-nudges/#customizing-nudging-prs
 kind: ConfigMap
 apiVersion: v1
